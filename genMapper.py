@@ -71,12 +71,21 @@ import java.util.Date;\r\n\r\n'
         out = '@Mapper\r\n\
 public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
 
+        # 生成 getById 函数
         if self.entity.keyCol :
             out = out + '\t' + self.entity.poClazz() + ' getById(@Param("id") \
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol \
- + ', @Param("lock") boolean lock);'
+ + ', @Param("lock") boolean lock);\r\n\r\n'
 
+        # 生成 insert 函数
+        out = out + self._genFunInsert()
         out = out + '\r\n}\r\n'
+        return out
+
+
+    def _genFunInsert(self) :
+        out = "\tint insert" + self.entity.clazzName + '('\
+            + self.entity.poClazz() + ' ' + self.entity.poProp() + ');\r\n\r\n'
         return out
 
     def _writeFile(self, content) :

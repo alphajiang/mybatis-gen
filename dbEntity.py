@@ -39,6 +39,9 @@ class DbEntity(object) :
     def poClazz(self) :
         return self.clazzName + 'Po'
 
+    def poProp(self) :
+        return self.clazzName[0].lower() + self.clazzName[1:] + 'Po'
+
     def fullPo(self) :
         return self.packageName + '.' + self.moduleName + '.po.' + self.clazzName + 'Po'
 

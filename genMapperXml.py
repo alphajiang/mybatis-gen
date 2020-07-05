@@ -86,6 +86,7 @@ class GenRwMapperXml(object) :
 
         out = out + self._genResultMap()
         out = out + self._genFunGeyByKey()
+        out = out + self._genFunInsert()
 
         out = out + '</mapper>\r\n'
 
@@ -120,6 +121,29 @@ class GenRwMapperXml(object) :
             return out
         else :
             return ''
+
+
+    def _genFunInsert(self) :
+        out = '\t<insert id="insert' + self.entity.clazzName + '" useGeneratedKeys="true" keyProperty="id"\r\n'\
+            + '\t\tkeyColumn="id" parameterType="'\
+            + self.entity.fullPo() + '">\r\n'\
+            + '\t\tinsert into ' + self.entity.tableName + ' ('
+        for col in self.entity.colList :
+            if col.name == self.entity.keyCol :
+                continue
+            out = out + '`' + col.name + '`' + ',\r\n\t\t\t'
+        out = out[0:-6] + ')\r\n'\
+            + '\t\tvalues ('
+        for col in self.entity.colList :
+            if col.name == self.entity.keyCol :
+                continue
+            elif col.name == 'createTime' or col.name == 'updateTime':
+                out = out + 'now(),\r\n\t\t\t'
+            else :
+                out = out + '#{' + col.name + '}' + ',\r\n\t\t\t'
+        out = out[0:-6] + ')\r\n'\
+            + '\t</insert>\r\n\r\n'
+        return out            
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwMapper.xml"

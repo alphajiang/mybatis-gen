@@ -94,10 +94,22 @@ public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ', boolean lock) {\r\n\
 \t\treturn this.' + self.entity.rwMapperProp() + '.get'  + self.entity.keyCol.capitalize() \
     + '(' + self.entity.keyCol + ', lock);\r\n' \
-        + '\t}'
+        + '\t}\r\n\r\n'
 
+        out = out + self._genFunInsert()
         out = out + '\r\n}\r\n'
         return out
+
+    def _genFunInsert(self) :
+        out = '\tboolean insert' + self.entity.clazzName + '('\
+            + self.entity.poClazz() + ' ' + self.entity.poProp() + ') {\r\n'\
+            + '\t\treturn this.' + self.entity.rwMapperProp() \
+            + '.insert' + self.entity.clazzName + '(' + self.entity.poProp() \
+            + ') > 0;\r\n'\
+            + '\t}\r\n\r\n'
+        return out
+
+
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwDs.java"
