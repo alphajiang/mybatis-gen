@@ -16,7 +16,7 @@ class GenRoDs(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.packageName + '.ro.' + self.entity.moduleName + '.ds;\r\n\r\n\
+        out = 'package ' + self.entity.dsPackage + '.ro.' + self.entity.moduleName + '.ds;\r\n\r\n\
 import ' + self.entity.fullPo() + ';\r\n\
 import ' + self.entity.fullRoMapper() + ';\r\n\
 import lombok.extern.slf4j.Slf4j;\r\n\
@@ -38,9 +38,9 @@ public class ' + self.entity.clazzName + 'RoDs {\r\n\r\n\
 
 
         if self.entity.keyCol :
-            out = out + '\tpublic ' + self.entity.poClazz() + ' getById(\
+            out = out + '\tpublic ' + self.entity.poClazz() + ' getBy' + self.entity.keyCol.capitalize() + '(\
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ') {\r\n\
-\t\treturn this.' + self.entity.roMapperProp() + '.get'  + self.entity.keyCol.capitalize() \
+\t\treturn this.' + self.entity.roMapperProp() + '.getBy'  + self.entity.keyCol.capitalize() \
     + '(' + self.entity.keyCol + ');\r\n' \
         + '\t}'
 
@@ -69,7 +69,7 @@ class GenRwDs(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.packageName + '.rw.' + self.entity.moduleName + '.ds;\r\n\r\n\
+        out = 'package ' + self.entity.dsPackage + '.rw.' + self.entity.moduleName + '.ds;\r\n\r\n\
 import ' + self.entity.fullPo() + ';\r\n\
 import ' + self.entity.fullRwMapper() + ';\r\n\
 import lombok.extern.slf4j.Slf4j;\r\n\
@@ -90,9 +90,9 @@ public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
 '    
 
         if self.entity.keyCol :
-            out = out + '\tpublic ' + self.entity.poClazz() + ' getById(\
+            out = out + '\tpublic ' + self.entity.poClazz() + ' getBy' + self.entity.keyCol.capitalize() + '(\
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ', boolean lock) {\r\n\
-\t\treturn this.' + self.entity.rwMapperProp() + '.get'  + self.entity.keyCol.capitalize() \
+\t\treturn this.' + self.entity.rwMapperProp() + '.getBy'  + self.entity.keyCol.capitalize() \
     + '(' + self.entity.keyCol + ', lock);\r\n' \
         + '\t}\r\n\r\n'
 

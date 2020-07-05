@@ -12,13 +12,17 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger("GenRoot")
 
 class GenRoot(object) :
-    def __init__(self, packageName, moduleName, entity) :
+    def __init__(self, packageName, moduleName, modelPackage, dsPackage, entity) :
         self.packageName = packageName
         self.moduleName = moduleName
+        self.modelPackage = modelPackage
+        self.dsPackage = dsPackage
 
         self.entity = entity
         self.entity.packageName = packageName
         self.entity.moduleName = moduleName
+        self.entity.modelPackage = modelPackage
+        self.entity.dsPackage = dsPackage
         #self.entity.fullPo()
         self.outDirRoot = "out"
         self.outDirPo = "out/po"

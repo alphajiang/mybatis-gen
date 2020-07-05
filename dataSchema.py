@@ -77,6 +77,8 @@ class DataSchema(object) :
                 clazzComment = self._parseEndLine(line)
             elif line.startswith("UNIQUE") :
                 pass
+            elif line.startswith("KEY") :
+                pass
             elif line.startswith("PRIMARY KEY") :
                 keyCol = self._parsePrimaryKey(line)
             else :
@@ -111,7 +113,7 @@ class DataSchema(object) :
             jdbcType = "VARCHAR"
         elif jdbcType.startswith("text") :
             javaType = "String"
-            jdbcType = "TEXT"
+            jdbcType = "LONGVARCHAR"
         elif jdbcType.startswith("datetime") :
             javaType = "Date"
             jdbcType = "DATETIME"

@@ -12,16 +12,18 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger("MyGen")
 
 class MyGen(object) :
-    def __init__(self, packageName, moduleName, dataSchema) :
+    def __init__(self, packageName, moduleName, modelPackage, dsPackage, dataSchema) :
         self.packageName = packageName
         self.moduleName = moduleName
+        self.modelPackage = modelPackage
+        self.dsPackage = dsPackage
         self.dataSchema = dataSchema
 
     def gen(self) :
         entityList = self.dataSchema.getTables()
         for entity in entityList :
             #log.debug(entity)
-            javaGen = GenRoot(self.packageName, self.moduleName, entity)
+            javaGen = GenRoot(self.packageName, self.moduleName, self.modelPackage, self.dsPackage, entity)
             javaGen.genJavaCode()
             
 
@@ -36,6 +38,8 @@ def main() :
     parser.add_option("-p", "--password", dest="password", help="访问数据库密码")
     parser.add_option("-t", "--tables", dest="tables", help="数据库表,使用逗号分隔")
     parser.add_option("--package", dest="packageName", help="java包名")
+    parser.add_option("--modelPackage", dest="modelPackage", help="java model包名")
+    parser.add_option("--dsPackage", dest="dsPackage", help="java ds包名")
     parser.add_option("--module", dest="moduleName", help="java模块名称")
     parser.add_option("-v", "--verbose", dest="verbose", help="verbose")
     (options, args) = parser.parse_args(args=sys.argv)
@@ -59,7 +63,7 @@ def main() :
         dbPassword = options.password,
         dbName = options.db,
         tables = options.tables)
-    myGen = MyGen(options.packageName, options.moduleName, dataSchema)
+    myGen = MyGen(options.packageName, options.moduleName, options.modelPackage, options.dsPackage, dataSchema)
     myGen.gen()
     # result = dbExport.export()
     result = True

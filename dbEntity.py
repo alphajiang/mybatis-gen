@@ -22,6 +22,8 @@ class DbEntity(object) :
         self.colList = colList
         self._packageName = ''
         self._moduleName = ''
+        self._modelPackage = ''
+        self._dsPackage = ''
 
         
     def packageName(self, packageName) :
@@ -36,6 +38,19 @@ class DbEntity(object) :
     def moduleName(self) :
         return self._moduleName
 
+    def modelPackage(self, modelPackage) :
+        self._modelPackage = modelPackage
+
+    def modelPackage(self) :
+        return self._modelPackage
+
+    def dsPackage(self, dsPackage) :
+        self._dsPackage = dsPackage
+
+    def dsPackage(self) :
+        return self._dsPackage
+        
+
     def poClazz(self) :
         return self.clazzName + 'Po'
 
@@ -43,7 +58,7 @@ class DbEntity(object) :
         return self.clazzName[0].lower() + self.clazzName[1:] + 'Po'
 
     def fullPo(self) :
-        return self.packageName + '.' + self.moduleName + '.po.' + self.clazzName + 'Po'
+        return self.modelPackage + '.' + self.moduleName + '.po.' + self.clazzName + 'Po'
 
     
     def roMapperClazz(self) :
@@ -53,7 +68,7 @@ class DbEntity(object) :
         return self.clazzName[0].lower() + self.clazzName[1:] + 'RoMapper'
 
     def fullRoMapper(self) :
-        return self.packageName + '.ro.' + self.moduleName + '.mapper.' + self.clazzName + 'RoMapper'
+        return self.dsPackage + '.ro.' + self.moduleName + '.mapper.' + self.clazzName + 'RoMapper'
 
     def rwMapperClazz(self) :
         return self.clazzName + 'RwMapper'
@@ -62,7 +77,7 @@ class DbEntity(object) :
         return self.clazzName[0].lower() + self.clazzName[1:] + 'RwMapper'        
 
     def fullRwMapper(self):
-        return self.packageName + '.rw.' + self.moduleName + '.mapper.' + self.clazzName + 'RwMapper'
+        return self.dsPackage + '.rw.' + self.moduleName + '.mapper.' + self.clazzName + 'RwMapper'
 
     def fullRoDs(self) :
         return self.packageName + '.ro.' + self.moduleName + '.ds.' + self.clazzName + 'RoDs'

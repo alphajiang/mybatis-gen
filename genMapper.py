@@ -14,9 +14,8 @@ class GenRoMapper(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.packageName + '.ro.' + self.entity.moduleName + '.mapper;\r\n\r\n\
-import ' + self.entity.packageName + '.' + self.entity.moduleName + '.po.' + self.entity.clazzName + 'Po;\r\n\
-import io.swagger.annotations.ApiModelProperty;\r\n\
+        out = 'package ' + self.entity.dsPackage + '.ro.' + self.entity.moduleName + '.mapper;\r\n\r\n\
+import ' + self.entity.fullPo()+ ';\r\n\
 import org.apache.ibatis.annotations.Mapper;\r\n\
 import org.apache.ibatis.annotations.Param;\r\n\
 import java.math.BigDecimal;\r\n\
@@ -31,7 +30,7 @@ public interface ' + self.entity.clazzName + 'RoMapper {\r\n\r\n'
 
 
         if self.entity.keyCol :
-            out = out + '\t' + self.entity.poClazz() + ' getById(@Param("id") \
+            out = out + '\t' + self.entity.poClazz() + ' getBy' + self.entity.keyCol.capitalize() + '(@Param("id") \
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ');'
         out = out + '\r\n}\r\n'
         return out
@@ -56,9 +55,8 @@ class GenRwMapper(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.packageName + '.rw.' + self.entity.moduleName + '.mapper;\r\n\r\n\
-import ' + self.entity.packageName + '.' + self.entity.moduleName + '.po.' + self.entity.clazzName + 'Po;\r\n\
-import io.swagger.annotations.ApiModelProperty;\r\n\
+        out = 'package ' + self.entity.dsPackage + '.rw.' + self.entity.moduleName + '.mapper;\r\n\r\n\
+import ' + self.entity.fullPo()+ ';\r\n\
 import org.apache.ibatis.annotations.Mapper;\r\n\
 import org.apache.ibatis.annotations.Param;\r\n\
 import java.math.BigDecimal;\r\n\
@@ -73,7 +71,7 @@ public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
 
         # 生成 getById 函数
         if self.entity.keyCol :
-            out = out + '\t' + self.entity.poClazz() + ' getById(@Param("id") \
+            out = out + '\t' + self.entity.poClazz() + ' getBy' + self.entity.keyCol.capitalize() + '(@Param("id") \
 ' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol \
  + ', @Param("lock") boolean lock);\r\n\r\n'
 
