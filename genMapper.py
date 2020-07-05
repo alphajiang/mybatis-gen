@@ -79,6 +79,8 @@ public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
 
         # 生成 insert 函数
         out = out + self._genFunInsert()
+
+        out = out + self._genFunUpdate()
         out = out + '\r\n}\r\n'
         return out
 
@@ -87,6 +89,11 @@ public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
         out = "\tint insert" + self.entity.clazzName + '('\
             + self.entity.poClazz() + ' ' + self.entity.poProp() + ');\r\n\r\n'
         return out
+
+    def _genFunUpdate(self) :
+        out = "\tint update" + self.entity.clazzName + '('\
+            + self.entity.poClazz() + ' ' + self.entity.poProp() + ');\r\n\r\n'
+        return out        
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwMapper.java"
