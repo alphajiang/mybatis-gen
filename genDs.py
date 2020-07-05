@@ -33,8 +33,18 @@ import java.util.Date;\r\n\r\n'
 @Service\r\n\
 public class ' + self.entity.clazzName + 'RoDs {\r\n\r\n\
 \t@Autowired\r\n\
-\tprivate ' + self.entity.clazzName + 'RoMapper ' + self.entity.roMapper() + ';\r\n\r\n\
-'    
+\tprivate ' + self.entity.roMapperClazz() + ' ' + self.entity.roMapperProp() + ';\r\n\r\n'
+    
+
+
+        if self.entity.keyCol :
+            out = out + '\tpublic ' + self.entity.poClazz() + ' getById(\
+' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ') {\r\n\
+\t\treturn this.' + self.entity.roMapperProp() + '.get'  + self.entity.keyCol.capitalize() \
+    + '(' + self.entity.keyCol + ');\r\n' \
+        + '\t}'
+
+
         out = out + '\r\n}\r\n'
         return out
 
@@ -76,8 +86,16 @@ import java.util.Date;\r\n\r\n'
 @Service\r\n\
 public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
 \t@Autowired\r\n\
-\tprivate ' + self.entity.clazzName + 'RwMapper ' + self.entity.rwMapper() + ';\r\n\r\n\
+\tprivate ' + self.entity.rwMapperClazz() + ' ' + self.entity.rwMapperProp() + ';\r\n\r\n\
 '    
+
+        if self.entity.keyCol :
+            out = out + '\tpublic ' + self.entity.poClazz() + ' getById(\
+' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ', boolean lock) {\r\n\
+\t\treturn this.' + self.entity.rwMapperProp() + '.get'  + self.entity.keyCol.capitalize() \
+    + '(' + self.entity.keyCol + ', lock);\r\n' \
+        + '\t}'
+
         out = out + '\r\n}\r\n'
         return out
 

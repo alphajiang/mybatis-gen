@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import pymysql.cursors
-import logging
+import re,logging
 from dbEntity import DbEntity,DbColumn
 
 
@@ -67,6 +67,7 @@ class DataSchema(object) :
         # 下划线转驼峰
         clazzName = "".join(map(lambda x:x.capitalize(), tableName.strip("t_").split("_")))
         clazzComment = ""
+        keyCol = None
         colList = []
         for line in tableSchema.splitlines() :
             line = line.strip()
@@ -76,13 +77,13 @@ class DataSchema(object) :
                 clazzComment = self._parseEndLine(line)
             elif line.startswith("UNIQUE") :
                 pass
-            elif line.startswith("PRIMARY") :
-                pass
+            elif line.startswith("PRIMARY KEY") :
+                keyCol = self._parsePrimaryKey(line)
             else :
                 col = self._parseTableColumnLine(line)
                 colList.append(col)
 
-        dbEntity = DbEntity(clazzName, clazzComment, colList)
+        dbEntity = DbEntity(tableName, clazzName, clazzComment, keyCol, colList)
         return dbEntity
 
 
@@ -91,25 +92,35 @@ class DataSchema(object) :
         items = line.split(" ")
         name = items[0]
         name = name.strip("`")
-        type = items[1]
-        if type.startswith("int") :
-            type = "Integer"
-        elif type.startswith("tinyint") :
-            type = "Integer"
-        elif type.startswith("bigint") :
-            type = "Long"
-        elif type.startswith("decimal") :
-            type = "BigDecimal"
-        elif type.startswith("varchar") :
-            type = "String"
-        elif type.startswith("text") :
-            type = "String"
-        elif type.startswith("datetime") :
-            type = "Date"
-        elif type.startswith("date") :
-            type = "Date"
-        elif type.startswith("timestamp") :
-            type = "Date"
+        jdbcType = items[1]
+        javaType = jdbcType
+        if jdbcType.startswith("int") :
+            javaType = "Integer"
+            jdbcType = "INTEGER"
+        elif jdbcType.startswith("tinyint") :
+            javaType = "Integer"
+            jdbcType = "INTEGER"
+        elif jdbcType.startswith("bigint") :
+            javaType = "Long"
+            jdbcType = "BIGINT"
+        elif jdbcType.startswith("decimal") :
+            javaType = "BigDecimal"
+            jdbcType = "DECIMAL"
+        elif jdbcType.startswith("varchar") :
+            javaType = "String"
+            jdbcType = "VARCHAR"
+        elif jdbcType.startswith("text") :
+            javaType = "String"
+            jdbcType = "TEXT"
+        elif jdbcType.startswith("datetime") :
+            javaType = "Date"
+            jdbcType = "DATETIME"
+        elif jdbcType.startswith("date") :
+            javaType = "Date"
+            jdbcType = "DATE"
+        elif jdbcType.startswith("timestamp") :
+            javaType = "Date"
+            jdbcType = "TIMESTAMP"
         
         comment = ""
         for idx in range(len(items)) :
@@ -120,8 +131,13 @@ class DataSchema(object) :
         #log.debug(name)
         #log.debug(type)
         #log.debug(comment)
-        dbCol = DbColumn(name, type, comment)
+        dbCol = DbColumn(name, javaType, jdbcType, comment)
         return dbCol
+
+    def _parsePrimaryKey(self, line):
+        key = line.split(' ')[-1]
+        key = re.sub('[()\,`]', '', key)
+        return key
 
     def _parseEndLine(self, line) :
         items = line.split(" ")

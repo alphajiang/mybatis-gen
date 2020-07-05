@@ -27,8 +27,12 @@ import java.util.Date;\r\n\r\n'
 
     def _genClazz(self) :
         out = '@Mapper\r\n\
-public interface ' + self.entity.clazzName + 'RoMapper {\r\n\
-'
+public interface ' + self.entity.clazzName + 'RoMapper {\r\n\r\n'
+
+
+        if self.entity.keyCol :
+            out = out + '\t' + self.entity.poClazz() + ' getById(@Param("id") \
+' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol + ');'
         out = out + '\r\n}\r\n'
         return out
 
@@ -65,8 +69,13 @@ import java.util.Date;\r\n\r\n'
 
     def _genClazz(self) :
         out = '@Mapper\r\n\
-public interface ' + self.entity.clazzName + 'RwMapper {\r\n\
-'
+public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
+
+        if self.entity.keyCol :
+            out = out + '\t' + self.entity.poClazz() + ' getById(@Param("id") \
+' + self.entity.getColJavaType(self.entity.keyCol) + ' ' + self.entity.keyCol \
+ + ', @Param("lock") boolean lock);'
+
         out = out + '\r\n}\r\n'
         return out
 

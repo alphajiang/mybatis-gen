@@ -33,7 +33,7 @@ public class ' + self.entity.clazzName + ' {\r\n\r\n'
         for col in self.entity.colList :
             if col.comment != '' :
                 out = out + '\t@ApiModelProperty(value = "' + col.comment + '")\r\n\
-\tprivate ' + col.type + ' ' + col.name + ';\r\n\r\n'
+\tprivate ' + col.javaType + ' ' + col.name + ';\r\n\r\n'
         out = out + '\r\n}\r\n'
         return out
 

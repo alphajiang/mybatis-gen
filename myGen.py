@@ -38,7 +38,6 @@ def main() :
     parser.add_option("--package", dest="packageName", help="java包名")
     parser.add_option("--module", dest="moduleName", help="java模块名称")
     parser.add_option("-v", "--verbose", dest="verbose", help="verbose")
-    parser.add_option("--email", dest="email", help="邮件通知")
     (options, args) = parser.parse_args(args=sys.argv)
     #print(options)
     if len(args) < 1:
