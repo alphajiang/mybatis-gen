@@ -3,15 +3,18 @@
 
 
 class DbColumn(object) : 
-    def __init__(self, name, javaType, jdbcType, comment) :
+    def __init__(self, name, javaType, jdbcType, comment, nullable, maxLen) :
         self.name = name
         self.javaType = javaType
         self.jdbcType = jdbcType
         self.comment = comment
+        self.nullable = nullable
+        self.maxLen = maxLen
 
 
     def __str__(self) :
-        return "name = " + self.name + ", javaType = " + self.javaType + ", comment = " + self.comment
+        return "name = " + self.name + ", javaType = " + self.javaType + ", comment = " + self.comment \
+            + ', nullable = ' + str(self.nullable) + ", maxLen = " + str(self.maxLen)
 
 class DbEntity(object) :
     def __init__(self, tableName, clazzName, clazzComment, keyCol, colList):

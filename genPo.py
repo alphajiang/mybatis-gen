@@ -17,6 +17,8 @@ class GenPo(object) :
         out = 'package ' + self.entity.modelPackage + '.' + self.entity.moduleName + '.po;\r\n\r\n\
 import io.swagger.annotations.ApiModel;\r\n\
 import io.swagger.annotations.ApiModelProperty;\r\n\
+import javax.validation.constraints.NotNull;\r\n\
+import javax.validation.constraints.Max;\r\n\
 import lombok.Data;\r\n\
 import lombok.experimental.Accessors;\r\n\
 import java.math.BigDecimal;\r\n\
@@ -32,8 +34,12 @@ import java.util.Date;\r\n\r\n'
 public class ' + self.entity.poClazz() + ' {\r\n\r\n'
         for col in self.entity.colList :
             if col.comment != '' :
-                out = out + '\t@ApiModelProperty(value = "' + col.comment + '")\r\n\
-\tprivate ' + col.javaType + ' ' + col.name + ';\r\n\r\n'
+                out = out + '\t@ApiModelProperty(value = "' + col.comment + '")\r\n'
+            if col.nullable == False :
+                out = out + '\t@NotNull(message = "' + col.name + ' 不能为 null")\r\n'
+            if col.maxLen :
+                out = out + '\t@Max(value = ' + col.maxLen + ', message = "' + col.name + ' 长度不能超过 ' + col.maxLen + '")\r\n'
+            out = out + '\tprivate ' + col.javaType + ' ' + col.name + ';\r\n\r\n'
         out = out + '\r\n}\r\n'
         return out
 

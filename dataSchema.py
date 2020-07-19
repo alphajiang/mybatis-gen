@@ -96,9 +96,13 @@ class DataSchema(object) :
         name = name.strip("`")
         jdbcType = items[1]
         javaType = jdbcType
+        maxLen = None
         if jdbcType.startswith("int") :
             javaType = "Integer"
             jdbcType = "INTEGER"
+        elif jdbcType.startswith("tinyint(1)") :
+            javaType = "Boolean"
+            jdbcType = "BOOLEAN"
         elif jdbcType.startswith("tinyint") :
             javaType = "Integer"
             jdbcType = "INTEGER"
@@ -128,12 +132,22 @@ class DataSchema(object) :
         for idx in range(len(items)) :
             #print(idx)
             if items[idx] == "COMMENT" :
-                comment = items[idx +1].strip(",").strip("'")
+                pt = re.compile("COMMENT \'(.+)\'")
+                comment = pt.findall(line)[0]
+                # comment = items[idx +1].strip(",").strip("'")
+                # log.debug("xxxxxxxxxxxxxxxxxxx")
+                # log.debug(comment)
                 break
         #log.debug(name)
         #log.debug(type)
         #log.debug(comment)
-        dbCol = DbColumn(name, javaType, jdbcType, comment)
+        nullable = re.search(r'NOT NULL', line) == None
+        if(javaType == 'String') :
+            pt = re.compile('varchar\((\d+)\)')
+            maxLenRet = pt.findall(line)
+            if maxLenRet : 
+                maxLen = maxLenRet[0]
+        dbCol = DbColumn(name, javaType, jdbcType, comment, nullable, maxLen)
         return dbCol
 
     def _parsePrimaryKey(self, line):
