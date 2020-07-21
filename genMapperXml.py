@@ -44,7 +44,7 @@ class GenRoMapperXml(object) :
         if self.entity.keyCol :
             
         
-            out = '\t<select id="getById"\r\n'\
+            out = '\t<select id="getBy' + self.entity.keyCol.capitalize()  + '"\r\n'\
                 + '\t\t\tresultMap="RESULT_' + self.entity.clazzName.upper() + '_PO">\t\n'\
                 + '\t\tselect * from ' + self.entity.tableName + ' where '\
                 + self.entity.keyCol + ' = #{' + self.entity.keyCol + '}\r\n'\
@@ -111,7 +111,7 @@ class GenRwMapperXml(object) :
         if self.entity.keyCol :
             
         
-            out = '\t<select id="getById"\r\n'\
+            out = '\t<select id="getBy' + self.entity.keyCol.capitalize() + '"\r\n'\
                 + '\t\t\tresultMap="RESULT_' + self.entity.clazzName.upper() + '_PO">\t\n'\
                 + '\t\tselect * from ' + self.entity.tableName + ' where '\
                 + self.entity.keyCol + ' = #{' + self.entity.keyCol + '}\r\n'\
