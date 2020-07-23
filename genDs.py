@@ -102,7 +102,7 @@ public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
         return out
 
     def _genFunInsert(self) :
-        out = '\tboolean insert' + self.entity.clazzName + '('\
+        out = '\tpublic boolean insert' + self.entity.clazzName + '('\
             + self.entity.poClazz() + ' ' + self.entity.poProp() + ') {\r\n'\
             + '\t\treturn this.' + self.entity.rwMapperProp() \
             + '.insert' + self.entity.clazzName + '(' + self.entity.poProp() \
@@ -111,7 +111,7 @@ public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
         return out
 
     def _genFunUpdate(self) :
-        out = '\tboolean update' + self.entity.clazzName + '('\
+        out = '\tpublic boolean update' + self.entity.clazzName + '('\
             + self.entity.poClazz() + ' ' + self.entity.poProp() + ') {\r\n'\
             + '\t\treturn this.' + self.entity.rwMapperProp() \
             + '.update' + self.entity.clazzName + '(' + self.entity.poProp() \
