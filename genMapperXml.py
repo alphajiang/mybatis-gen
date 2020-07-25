@@ -152,7 +152,7 @@ class GenRwMapperXml(object) :
             
             out = '\t<update id="update' + self.entity.clazzName + '" parameterType="'\
                 + self.entity.fullPo() + '">\r\n'\
-                + '\t\tupdate ' + self.entity.tableName + 'set\r\n'
+                + '\t\tupdate ' + self.entity.tableName + ' set\r\n'
             for col in self.entity.colList :
                 if col.name == self.entity.keyCol :
                     continue
