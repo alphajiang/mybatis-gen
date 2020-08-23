@@ -1,4 +1,4 @@
-
+import os
 
 
 class GenRoMapper(object) :
@@ -43,9 +43,14 @@ public interface ' + self.entity.clazzName + 'RoMapper {\r\n\r\n'
 
 
 class GenRwMapper(object) :
-    def __init__(self, entity, outDir):
+    def __init__(self, entity, outDir, splitRead):
         self.entity = entity
         self.outDir = outDir
+        self.splitRead = splitRead
+        if self.splitRead :
+            self.fileName = os.path.join(self.outDir, 'rw', entity.rwMapperClazz() + '.java')             
+        else :
+            self.fileName = os.path.join(self.outDir, entity.rwMapperClazz() + '.java')
 
     def gen(self) :
         out = self._genImport()
@@ -55,7 +60,12 @@ class GenRwMapper(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.dsPackage + '.rw.' + self.entity.moduleName + '.mapper;\r\n\r\n\
+        out = 'package ' + self.entity.dsPackage 
+        if self.splitRead:
+            out = out + '.rw.'
+        else:
+            out = out + '.'
+        out = out + self.entity.moduleName + '.mapper;\r\n\r\n\
 import ' + self.entity.fullPo()+ ';\r\n\
 import org.apache.ibatis.annotations.Mapper;\r\n\
 import org.apache.ibatis.annotations.Param;\r\n\
@@ -67,7 +77,8 @@ import java.util.Date;\r\n\r\n'
 
     def _genClazz(self) :
         out = '@Mapper\r\n\
-public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
+public interface ' + self.entity.rwMapperClazz() + ' {\r\n'
+ 
 
         # 生成 getById 函数
         if self.entity.keyCol :
@@ -94,7 +105,6 @@ public interface ' + self.entity.clazzName + 'RwMapper {\r\n'
         return out        
 
     def _writeFile(self, content) :
-        fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwMapper.java"
-        with open(fileName, 'w') as f :
+        with open(self.fileName, 'w') as f :
             f.write(content)
 

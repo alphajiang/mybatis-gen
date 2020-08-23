@@ -27,7 +27,10 @@ class DbEntity(object) :
         self._moduleName = ''
         self._modelPackage = ''
         self._dsPackage = ''
+        self._splitRead = False
 
+    def splitRead(self, val) :
+        self._splitRead = val
         
     def packageName(self, packageName) :
         self._packageName = packageName
@@ -73,21 +76,39 @@ class DbEntity(object) :
     def fullRoMapper(self) :
         return self.dsPackage + '.ro.' + self.moduleName + '.mapper.' + self.clazzName + 'RoMapper'
 
+    def rwDsClazz(self) :
+        if self._splitRead:
+            return self.clazzName + 'RwDs'
+        else :
+            return self.clazzName + 'Ds'
+
     def rwMapperClazz(self) :
-        return self.clazzName + 'RwMapper'
+        if self._splitRead:
+            return self.clazzName + 'RwMapper'
+        else :
+            return self.clazzName + 'Mapper'
 
     def rwMapperProp(self) :
-        return self.clazzName[0].lower() + self.clazzName[1:] + 'RwMapper'        
+        if self._splitRead:
+            return self.clazzName[0].lower() + self.clazzName[1:] + 'RwMapper'        
+        else :
+            return self.clazzName[0].lower() + self.clazzName[1:] + 'Mapper'
 
     def fullRwMapper(self):
-        return self.dsPackage + '.rw.' + self.moduleName + '.mapper.' + self.clazzName + 'RwMapper'
+        if self._splitRead:
+            return self.dsPackage + '.rw.' + self.moduleName + '.mapper.' + self.clazzName + 'RwMapper'
+        else:
+            return self.dsPackage + '.' + self.moduleName + '.mapper.' + self.clazzName + 'Mapper'
 
     def fullRoDs(self) :
         return self.packageName + '.ro.' + self.moduleName + '.ds.' + self.clazzName + 'RoDs'
 
 
     def fullRwDs(self) :
-        return self.packageName + '.rw.' + self.moduleName + '.ds.' + self.clazzName + 'RwDs'
+        if self._splitRead:
+            return self.packageName + '.rw.' + self.moduleName + '.ds.' + self.clazzName + 'RwDs'
+        else:
+            return self.packageName + '.' + self.moduleName + '.ds.' + self.clazzName + 'Ds'
 
 
     def getColJavaType(self, colName) :

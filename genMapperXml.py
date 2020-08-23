@@ -1,5 +1,5 @@
 
-
+import os
 
 
 
@@ -66,9 +66,14 @@ class GenRoMapperXml(object) :
 
 
 class GenRwMapperXml(object) :
-    def __init__(self, entity, outDir):
+    def __init__(self, entity, outDir, splitRead):
         self.entity = entity
         self.outDir = outDir
+        self.splitRead = splitRead
+        if self.splitRead:
+            self.fileName = os.path.join(self.outDir, 'rw', entity.rwMapperClazz() + '.xml')  
+        else :
+            self.fileName = os.path.join(self.outDir, entity.rwMapperClazz() + '.xml')  
 
     def gen(self) :
         out = self._genXml()
@@ -172,7 +177,6 @@ class GenRwMapperXml(object) :
             return ''         
 
     def _writeFile(self, content) :
-        fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwMapper.xml"
-        with open(fileName, 'w') as f :
+        with open(self.fileName, 'w') as f :
             f.write(content)
 

@@ -9,10 +9,11 @@ log = logging.getLogger("dataSchema")
 
 # 解析数据库create table语句,生成出数据对象
 class DataSchema(object) :
-    def __init__(self, dbHost, dbUsername, dbPassword, dbName, tables) :
+    def __init__(self, dbHost, dbPort, dbUsername, dbPassword, dbName, tables) :
         self.dbConn = None
         self.cursor = None
         self.dbHost = dbHost
+        self.dbPort = dbPort
         self.dbUsername = dbUsername
         self.dbPassword = dbPassword
         self.dbName = dbName
@@ -36,8 +37,9 @@ class DataSchema(object) :
         return entityList
         
     def _connect(self) :
-        log.debug(">> host = " + self.dbHost + ", db = " + self.dbName + ", username = " + self.dbUsername)
+        log.debug(">> host = " + self.dbHost + ", port = " + str(self.dbPort) + ", db = " + self.dbName + ", username = " + self.dbUsername)
         self.dbConn = pymysql.connect(host=self.dbHost,
+                                 port=self.dbPort,
                                  user=self.dbUsername,
                                  password=self.dbPassword,
                                  db=self.dbName,

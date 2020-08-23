@@ -1,4 +1,4 @@
-
+import os
 
 
 
@@ -57,9 +57,16 @@ public class ' + self.entity.clazzName + 'RoDs {\r\n\r\n\
 
 
 class GenRwDs(object) :
-    def __init__(self, entity, outDir):
+    def __init__(self, entity, outDir, splitRead):
         self.entity = entity
         self.outDir = outDir
+        self.splitRead = splitRead
+        if self.splitRead:
+            self.fileName = os.path.join(self.outDir, 'rw', entity.rwDsClazz() + '.java')
+            self.fullPackage = self.entity.dsPackage + '.rw.' + self.entity.moduleName + '.ds'
+        else:
+            self.fileName = os.path.join(self.outDir, entity.rwDsClazz() + '.java')
+            self.fullPackage = self.entity.dsPackage + '.' + self.entity.moduleName + '.ds'
 
     def gen(self) :
         out = self._genImport()
@@ -69,7 +76,7 @@ class GenRwDs(object) :
 
 
     def _genImport(self):
-        out = 'package ' + self.entity.dsPackage + '.rw.' + self.entity.moduleName + '.ds;\r\n\r\n\
+        out = 'package ' + self.fullPackage + ';\r\n\r\n\
 import ' + self.entity.fullPo() + ';\r\n\
 import ' + self.entity.fullRwMapper() + ';\r\n\
 import lombok.extern.slf4j.Slf4j;\r\n\
@@ -84,7 +91,7 @@ import java.util.Date;\r\n\r\n'
     def _genClazz(self) :
         out = '@Slf4j\r\n\
 @Service\r\n\
-public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
+public class ' + self.entity.rwDsClazz() + ' {\r\n\r\n\
 \t@Autowired\r\n\
 \tprivate ' + self.entity.rwMapperClazz() + ' ' + self.entity.rwMapperProp() + ';\r\n\r\n\
 '    
@@ -121,6 +128,6 @@ public class ' + self.entity.clazzName + 'RwDs {\r\n\r\n\
 
 
     def _writeFile(self, content) :
-        fileName = self.outDir + "/rw/" + self.entity.clazzName + "RwDs.java"
-        with open(fileName, 'w') as f :
+        
+        with open(self.fileName, 'w') as f :
             f.write(content)
