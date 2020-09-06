@@ -34,7 +34,7 @@ import java.util.Date;\r\n\r\n'
 public class ' + self.entity.poClazz() + ' {\r\n\r\n'
         for col in self.entity.colList :
             if col.comment != '' :
-                out = out + '\t@ApiModelProperty(value = "' + col.comment + '")\r\n'
+                out = out + '\t@ApiModelProperty(value = "' + col.comment.replace('"', '\\"') + '")\r\n'
             if col.nullable == False :
                 out = out + '\t@NotNull(message = "' + col.name + ' 不能为 null")\r\n'
             if col.maxLen :

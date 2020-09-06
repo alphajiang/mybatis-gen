@@ -105,7 +105,7 @@ class DataSchema(object) :
         elif jdbcType.startswith("tinyint(1)") :
             javaType = "Boolean"
             jdbcType = "BOOLEAN"
-        elif jdbcType.startswith("tinyint") :
+        elif jdbcType.startswith("tinyint") or jdbcType.startswith("smallint") :
             javaType = "Integer"
             jdbcType = "INTEGER"
         elif jdbcType.startswith("bigint") :
@@ -122,7 +122,7 @@ class DataSchema(object) :
             jdbcType = "LONGVARCHAR"
         elif jdbcType.startswith("datetime") :
             javaType = "Date"
-            jdbcType = "DATETIME"
+            jdbcType = "DATE"
         elif jdbcType.startswith("date") :
             javaType = "Date"
             jdbcType = "DATE"
