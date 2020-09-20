@@ -67,7 +67,7 @@ class DataSchema(object) :
     def _parseTable(self, tableName, tableSchema) :
         log.debug(tableSchema)
         # 下划线转驼峰
-        clazzName = "".join(map(lambda x:x.capitalize(), tableName.lstrip("t_").split("_")))
+        clazzName = "".join(map(lambda x:x.capitalize(), tableName.replace("t_", '', 1).split("_")))
         clazzComment = ""
         keyCol = None
         colList = []
