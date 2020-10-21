@@ -19,6 +19,7 @@ import ' + self.entity.fullPo()+ ';\r\n\
 import org.apache.ibatis.annotations.Mapper;\r\n\
 import org.apache.ibatis.annotations.Param;\r\n\
 import java.math.BigDecimal;\r\n\
+import java.lang.Double;\r\n\
 import java.util.Date;\r\n\r\n'
 
         return out
@@ -70,6 +71,7 @@ import ' + self.entity.fullPo()+ ';\r\n\
 import org.apache.ibatis.annotations.Mapper;\r\n\
 import org.apache.ibatis.annotations.Param;\r\n\
 import java.math.BigDecimal;\r\n\
+import java.lang.Double;\r\n\
 import java.util.Date;\r\n\r\n'
 
         return out

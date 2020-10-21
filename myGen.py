@@ -13,8 +13,9 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger("MyGen")
 
 class MyGen(object) :
-    def __init__(self, splitRw, packageName, moduleName, modelPackage, dsPackage, dataSchema) :
+    def __init__(self, splitRw, decimalType, packageName, moduleName, modelPackage, dsPackage, dataSchema) :
         self.splitRw = splitRw
+        self.decimalType = decimalType
         self.packageName = packageName
         self.moduleName = moduleName
         self.modelPackage = modelPackage
@@ -26,10 +27,10 @@ class MyGen(object) :
         for entity in entityList :
             #log.debug(entity)
             if self.splitRw == 'true':
-                javaGen = GenSplitRoot(self.packageName, self.moduleName, self.modelPackage, self.dsPackage, entity)
+                javaGen = GenSplitRoot(self.packageName, self.moduleName, self.modelPackage, self.dsPackage, self.decimalType, entity)
                 javaGen.genJavaCode()
             else:
-                javaGen = GenRoot(self.packageName, self.moduleName, self.modelPackage, self.dsPackage, entity)
+                javaGen = GenRoot(self.packageName, self.moduleName, self.modelPackage, self.dsPackage, self.decimalType, entity)
                 javaGen.genJavaCode()
             
 
@@ -50,8 +51,10 @@ def main() :
         dbUsername = cfg.get("DB", "username"),
         dbPassword = cfg.get("DB", "password"),
         dbName = cfg.get("DB", "database"),
-        tables = cfg.get("DB", "tables"))
+        tables = cfg.get("DB", "tables"),
+        decimalType = cfg.get("JAVA", "decimalType"))
     myGen = MyGen(splitRw = cfg.get("JAVA", "read_write_splitting"),
+        decimalType = cfg.get("JAVA", "decimalType"),
         packageName = cfg.get("JAVA", "package"), 
         moduleName = cfg.get("JAVA", "module"),
         modelPackage = cfg.get("JAVA", "model"), 

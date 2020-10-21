@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;\r\n\
 import org.springframework.beans.factory.annotation.Autowired;\r\n\
 import org.springframework.stereotype.Service;\r\n\
 import java.math.BigDecimal;\r\n\
+import java.lang.Double;\r\n\
 import java.util.Date;\r\n\r\n'
 
         return out
@@ -83,6 +84,7 @@ import lombok.extern.slf4j.Slf4j;\r\n\
 import org.springframework.beans.factory.annotation.Autowired;\r\n\
 import org.springframework.stereotype.Service;\r\n\
 import java.math.BigDecimal;\r\n\
+import java.lang.Double;\r\n\
 import java.util.Date;\r\n\r\n'
 
         return out

@@ -14,11 +14,12 @@ log = logging.getLogger("GenRoot")
 
 
 class GenRoot(object) :
-    def __init__(self, packageName, moduleName, modelPackage, dsPackage, entity) :
+    def __init__(self, packageName, moduleName, modelPackage, dsPackage, decimalType, entity) :
         self.packageName = packageName
         self.moduleName = moduleName
         self.modelPackage = modelPackage
         self.dsPackage = dsPackage
+        self.decimalType = decimalType
 
         self.entity = entity
         self.entity.packageName = packageName
@@ -61,11 +62,12 @@ class GenRoot(object) :
 
 
 class GenSplitRoot(object) :
-    def __init__(self, packageName, moduleName, modelPackage, dsPackage, entity) :
+    def __init__(self, packageName, moduleName, modelPackage, dsPackage, decimalType, entity) :
         self.packageName = packageName
         self.moduleName = moduleName
         self.modelPackage = modelPackage
         self.dsPackage = dsPackage
+        self.decimalType = decimalType
 
         self.entity = entity
         self.entity.packageName = packageName

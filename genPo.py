@@ -22,6 +22,7 @@ import javax.validation.constraints.Size;\r\n\
 import lombok.Data;\r\n\
 import lombok.experimental.Accessors;\r\n\
 import java.math.BigDecimal;\r\n\
+import java.lang.Double;\r\n\
 import java.util.Date;\r\n\r\n'
 
         return out

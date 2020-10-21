@@ -9,7 +9,7 @@ log = logging.getLogger("dataSchema")
 
 # 解析数据库create table语句,生成出数据对象
 class DataSchema(object) :
-    def __init__(self, dbHost, dbPort, dbUsername, dbPassword, dbName, tables) :
+    def __init__(self, dbHost, dbPort, dbUsername, dbPassword, dbName, tables, decimalType) :
         self.dbConn = None
         self.cursor = None
         self.dbHost = dbHost
@@ -18,6 +18,7 @@ class DataSchema(object) :
         self.dbPassword = dbPassword
         self.dbName = dbName
         self.tables = tables
+        self.decimalType = decimalType
 
 
     def getTables(self) :
@@ -112,7 +113,7 @@ class DataSchema(object) :
             javaType = "Long"
             jdbcType = "BIGINT"
         elif jdbcType.startswith("decimal") :
-            javaType = "BigDecimal"
+            javaType = self.decimalType
             jdbcType = "DECIMAL"
         elif jdbcType.startswith("varchar") :
             javaType = "String"

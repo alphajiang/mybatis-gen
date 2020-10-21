@@ -26,7 +26,7 @@ class GenRoMapperXml(object) :
         return out
 
     def _genResultMap(self):
-        out = '\t<resultMap id="RESULT_' + self.entity.tableName.lstrip("t_").upper() + '_PO" type="'\
+        out = '\t<resultMap id="RESULT_' + self.entity.tableName.replace("t_", '', 1).upper() + '_PO" type="'\
             + self.entity.fullPo() + '">\r\n'
         if self.entity.keyCol :
             out = out + '\t\t<id column="' + self.entity.keyCol + '" jdbcType="'\
@@ -45,7 +45,7 @@ class GenRoMapperXml(object) :
             
         
             out = '\t<select id="getBy' + self.entity.keyCol.capitalize()  + '"\r\n'\
-                + '\t\t\tresultMap="RESULT_' + self.entity.tableName.lstrip("t_").upper() + '_PO">\t\n'\
+                + '\t\t\tresultMap="RESULT_' + self.entity.tableName.replace("t_", '', 1).upper() + '_PO">\t\n'\
                 + '\t\tselect * from ' + self.entity.tableName + ' where '\
                 + self.entity.keyCol + ' = #{' + self.entity.keyCol + '}\r\n'\
                 + '\t</select>\r\n\r\n'
@@ -99,7 +99,7 @@ class GenRwMapperXml(object) :
         return out
 
     def _genResultMap(self):
-        out = '\t<resultMap id="RESULT_' + self.entity.tableName.lstrip("t_").upper() + '_PO" type="'\
+        out = '\t<resultMap id="RESULT_' + self.entity.tableName.replace("t_", '', 1).upper() + '_PO" type="'\
             + self.entity.fullPo() + '">\r\n'
         if self.entity.keyCol :
             out = out + '\t\t<id column="' + self.entity.keyCol + '" jdbcType="'\
@@ -117,7 +117,7 @@ class GenRwMapperXml(object) :
             
         
             out = '\t<select id="getBy' + self.entity.keyCol.capitalize() + '"\r\n'\
-                + '\t\t\tresultMap="RESULT_' + self.entity.tableName.lstrip("t_").upper() + '_PO">\t\n'\
+                + '\t\t\tresultMap="RESULT_' + self.entity.tableName.replace("t_", '', 1).upper() + '_PO">\t\n'\
                 + '\t\tselect * from ' + self.entity.tableName + ' where '\
                 + self.entity.keyCol + ' = #{' + self.entity.keyCol + '}\r\n'\
                 + '\t\t<if test="lock == true">\r\n'\
