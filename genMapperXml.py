@@ -56,7 +56,7 @@ class GenRoMapperXml(object) :
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/ro/" + self.entity.clazzName + "RoMapper.xml"
-        with open(fileName, 'w') as f :
+        with open(fileName, 'w', encoding='utf-8') as f :
             f.write(content)
 
 
@@ -177,6 +177,6 @@ class GenRwMapperXml(object) :
             return ''         
 
     def _writeFile(self, content) :
-        with open(self.fileName, 'w') as f :
+        with open(self.fileName, 'w', encoding='utf-8') as f :
             f.write(content)
 

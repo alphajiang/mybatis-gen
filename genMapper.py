@@ -38,7 +38,7 @@ public interface ' + self.entity.clazzName + 'RoMapper {\r\n\r\n'
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/ro/" + self.entity.clazzName + "RoMapper.java"
-        with open(fileName, 'w') as f :
+        with open(fileName, 'w', encoding='utf-8') as f :
             f.write(content)
 
 
@@ -107,6 +107,6 @@ public interface ' + self.entity.rwMapperClazz() + ' {\r\n'
         return out        
 
     def _writeFile(self, content) :
-        with open(self.fileName, 'w') as f :
+        with open(self.fileName, 'w', encoding='utf-8') as f :
             f.write(content)
 

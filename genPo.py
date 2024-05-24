@@ -46,5 +46,5 @@ public class ' + self.entity.poClazz() + ' {\r\n\r\n'
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/" + self.entity.clazzName + "Po.java"
-        with open(fileName, 'w') as f :
+        with open(fileName, 'w', encoding='utf-8') as f :
             f.write(content)

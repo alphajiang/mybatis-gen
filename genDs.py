@@ -51,7 +51,7 @@ public class ' + self.entity.clazzName + 'RoDs {\r\n\r\n\
 
     def _writeFile(self, content) :
         fileName = self.outDir + "/ro/" + self.entity.clazzName + "RoDs.java"
-        with open(fileName, 'w') as f :
+        with open(fileName, 'w', encoding='utf-8') as f :
             f.write(content)
 
 
@@ -131,5 +131,5 @@ public class ' + self.entity.rwDsClazz() + ' {\r\n\r\n\
 
     def _writeFile(self, content) :
         
-        with open(self.fileName, 'w') as f :
+        with open(self.fileName, 'w', encoding='utf-8') as f :
             f.write(content)
